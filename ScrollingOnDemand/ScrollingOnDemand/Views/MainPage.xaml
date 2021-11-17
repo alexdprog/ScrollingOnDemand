@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="ScrollingOnDemand.Views.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:ScrollingOnDemand.Controls;assembly=ScrollingOnDemand"
+    xmlns:viewModels="clr-namespace:ScrollingOnDemand.ViewModels;assembly=ScrollingOnDemand"
+    Title="{Binding Title}">
+    <controls:ContentViewTemplate x:Name="contentView" ControlTemplate="{StaticResource TotalPageTemplate}">
+        <StackLayout>
+            <Label Text="Welcome to Xamarin Forms and Prism!" />
+            <StackLayout BindableLayout.ItemsSource="{Binding MainList}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+
+                        <Frame
+                            Margin="0,4"
+                            BackgroundColor="LightBlue"
+                            SizeChanged="Frame_SizeChanged"
+                            CornerRadius="8">
+                            <StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label HorizontalOptions="StartAndExpand" Text="{Binding Name}" />
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:MainPageViewModel}}, Path=ExpandCommand}" CommandParameter="{Binding .}" />
+                                    </StackLayout.GestureRecognizers>
+                                </StackLayout>
+                                <StackLayout Padding="0,8" IsVisible="{Binding Expanded}">
+                                    <Label Text="{Binding ExpandName}" />
+                                </StackLayout>
+                            </StackLayout>
+                        </Frame>
+
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+        </StackLayout>
+    </controls:ContentViewTemplate>
+</ContentPage>
+
